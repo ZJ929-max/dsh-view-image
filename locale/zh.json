@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "看图（更多格式）",
+    "description": "补上 read_image 的缺口：新增 view_image，把 JXL、AVIF、HEIC/HEIF、BMP、TIFF（装了 ImageMagick 时的 PSD）转成 PNG 后返回图像本身。原文件只读，结果有缓存，长边超限先缩小再交给模型。",
+    "detail": "docs/DETAIL.md"
+  }
+}

@@ -1,0 +1,9 @@
+# dsh-view-image —— 让 agent 看见更多图片格式
+- insert:
+    - id: view-image
+      name: dsh-view-image
+      config:
+        enabled: true
+        defaultMaxWidth: 2000
+        codecDir: 'C:\dev\tools\codecs'
+        cacheMaxAgeDays: 7

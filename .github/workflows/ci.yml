@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static:
+    name: Static checks (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate manifests
+        run: |
+          node -e "for (const f of ['package.json','locale/en.json','locale/zh.json']) JSON.parse(require('node:fs').readFileSync(f,'utf8')); console.log('json ok')"
+          node -e "const p=require('./package.json'); if (p.dsh?.bundle?.patch !== './cordis.patch.yml') throw new Error('bundle patch not declared'); if (p.license !== 'MPL-2.0') throw new Error('license not declared'); console.log('manifest ok')"
+
+      - name: Load the plugin module
+        run: |
+          node -e "import('./index.js').then(m => { if (typeof m.apply !== 'function') throw new Error('apply is not exported'); if (!Array.isArray(m.inject) || !m.inject.includes('tools')) throw new Error('inject missing tools'); console.log('plugin ok:', Object.keys(m).join(',')) })"
+
+      - name: Offline suite (static, no decoder spawned)
+        env:
+          VIEW_IMAGE_STATIC: '1'
+        run: node test/convert.test.mjs
+
+  windows:
+    name: Conversion checks (Windows, WIC)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Generate fixtures with WIC (no downloads)
+        shell: powershell
+        run: ./test/make-fixtures.ps1 -Out "${{ runner.temp }}\view-image-fixtures"
+
+      - name: Offline suite (real conversion)
+        shell: pwsh
+        env:
+          VIEW_IMAGE_FIXTURES: ${{ runner.temp }}\view-image-fixtures
+        run: node test/convert.test.mjs

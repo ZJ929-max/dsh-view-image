@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "View more image formats",
+    "description": "Fills the gap left by read_image: adds a view_image tool that converts JXL, AVIF, HEIC/HEIF, BMP and TIFF (PSD when ImageMagick is installed) to PNG and returns the picture itself. The source file is only read, results are cached, and the long edge is capped before the model sees it.",
+    "detail": "docs/DETAIL.md"
+  }
+}

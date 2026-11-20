@@ -1,0 +1,42 @@
+{
+  "name": "dsh-view-image",
+  "version": "0.1.0",
+  "description": "view_image：把 jxl / avif / heic / heif / bmp / tiff（psd 需 ImageMagick）转成 PNG 后返回图像块。只读、带缓存、长边限幅。",
+  "license": "MPL-2.0",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "cordis.patch.yml",
+    "locale",
+    "docs",
+    "icon.svg",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+    "AI-DISCLOSURE.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZJ929-max/dsh-view-image.git"
+  },
+  "homepage": "https://github.com/ZJ929-max/dsh-view-image#readme",
+  "bugs": {
+    "url": "https://github.com/ZJ929-max/dsh-view-image/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
